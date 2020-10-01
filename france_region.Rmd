@@ -1,0 +1,24 @@
+---
+title: "French population by Region"
+output: html_document
+---
+
+The following map shows the population of the different French regions (continental regions + Corse island).
+
+```{r echo=FALSE}
+
+library(leaflet)
+
+# read csv file
+filename <- "france_region.csv"
+df <- read.csv(filename, header = TRUE)
+
+
+df %>%
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(lat = df$lat, lng = df$lng ,popup = df$Region, clusterOptions = markerClusterOptions()) %>%
+  addCircleMarkers(lat = df$lat, lng = df$lng ,weight = 2, radius = (df$Population/1000000*3), color = "Tomato")
+
+
+```
